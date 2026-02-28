@@ -1,16 +1,15 @@
-const sequelize = require('../config/database');
-const Job = require('./job');
+const db = require('../config/database');
+const Job = require('./Job');
 const Application = require('./Application');
+const Admin = require('./Admin');
 
 // ─── Associations ─────────────────────────────────────────────
-// A Job has many Applications
 Job.hasMany(Application, { foreignKey: 'job_id', as: 'applications', onDelete: 'CASCADE' });
-
-// An Application belongs to a Job
 Application.belongsTo(Job, { foreignKey: 'job_id', as: 'job' });
 
 module.exports = {
-  sequelize,
+  sequelize: db,
   Job,
   Application,
+  Admin,
 };

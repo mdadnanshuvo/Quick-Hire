@@ -1,23 +1,20 @@
 const router = require('express').Router();
 const {
-  getAllJobs,
-  getJobById,
-  createJob,
-  updateJob,
-  deleteJob,
-  getFilterMeta,
+  getAllJobs, getJobById, createJob,
+  updateJob, deleteJob, getFilterMeta,
 } = require('../controllers/job.controller');
 const { createJobRules, updateJobRules } = require('../validators/job.validator');
 const validate = require('../middlewares/validate');
+const { protect } = require('../middlewares/auth.middleware');
 
-// ── Filter meta (must come before /:id to avoid route conflict) ──
+// ── Public routes ─────────────────────────────────────────────
 router.get('/meta/filters', getFilterMeta);
+router.get('/', getAllJobs);
+router.get('/:id', getJobById);
 
-// ── Job CRUD ──────────────────────────────────────────────────
-router.get('/',        getAllJobs);
-router.get('/:id',     getJobById);
-router.post('/',       createJobRules, validate, createJob);
-router.put('/:id',     updateJobRules, validate, updateJob);
-router.delete('/:id',  deleteJob);
+// ── Admin protected routes ────────────────────────────────────
+router.post('/',      protect, createJobRules, validate, createJob);
+router.put('/:id',   protect, updateJobRules, validate, updateJob);
+router.delete('/:id', protect, deleteJob);
 
 module.exports = router;
