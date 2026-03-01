@@ -10,7 +10,6 @@ const { protect } = require('../middlewares/auth.middleware');
 // ── Public ────────────────────────────────────────────────────
 router.post('/', submitApplicationRules, validate, submitApplication);
 
-// ── Admin protected ───────────────────────────────────────────
 router.get('/',             protect, getAllApplications);
 router.get('/:id',          protect, getApplicationById);
 router.patch('/:id/status', protect, updateStatusRules, validate, updateApplicationStatus);
