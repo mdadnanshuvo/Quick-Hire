@@ -4,7 +4,7 @@ const sequelize = require('../config/database');
 // Import models — filenames must match exactly (case-sensitive)
 const Job = require('./job');
 const Application = require('./Application');
-const Admin = require('./admin');
+const Admin = require('./Admin');
 
 // ─── Associations ─────────────────────────────────────────────
 Job.hasMany(Application, { foreignKey: 'job_id', as: 'applications', onDelete: 'CASCADE' });
