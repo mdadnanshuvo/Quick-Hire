@@ -4,13 +4,23 @@ const { Sequelize } = require('sequelize');
 let sequelize;
 
 if (process.env.NODE_ENV === 'production') {
-  // Use Render internal database in production
+  // Production: use Render internal database
+  if (!process.env.DB_URL) {
+    throw new Error('DB_URL is missing in production environment!');
+  }
+
   sequelize = new Sequelize(process.env.DB_URL, {
     dialect: 'postgres',
     logging: false,
+    pool: {
+      max: 10,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
   });
 } else {
-  // Use local Postgres in development
+  // Development: use local Postgres
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -20,6 +30,12 @@ if (process.env.NODE_ENV === 'production') {
       port: process.env.DB_PORT || 5432,
       dialect: 'postgres',
       logging: console.log,
+      pool: {
+        max: 10,
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+      },
     }
   );
 }

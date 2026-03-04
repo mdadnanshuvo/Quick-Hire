@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 const seedAdmin = async () => {
   try {
     if (!process.env.ADMIN_SEED_EMAIL || !process.env.ADMIN_SEED_PASSWORD) {
-      console.warn('⚠️ Admin seed variables are missing in environment. Skipping seeding.');
+      console.warn('⚠️ Admin seed variables missing. Skipping seeding.');
       return;
     }
 
@@ -28,11 +28,10 @@ const startServer = async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ Database connection established.');
-    
-    // Sync models safely
+
     await sequelize.sync({ alter: true });
     console.log('✅ Models synchronized.');
-    
+
     await seedAdmin();
 
     app.listen(PORT, () => {
