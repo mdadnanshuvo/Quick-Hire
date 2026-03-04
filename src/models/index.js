@@ -3,7 +3,7 @@ const sequelize = require('../config/database');
 
 // Import models — filenames must match exactly (case-sensitive)
 const Job = require('./job');
-const Application = require('./application');
+const Application = require('./Application');
 const Admin = require('./admin');
 
 // ─── Associations ─────────────────────────────────────────────
