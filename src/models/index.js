@@ -1,5 +1,5 @@
 const db = require('../config/database');
-const Job = require('./Job');
+const Job = require('./job');
 const Application = require('./Application');
 const Admin = require('./Admin');
 
